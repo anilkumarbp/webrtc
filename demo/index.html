@@ -13,6 +13,7 @@
 <label>extension</label><input type="text" id="extension" /><br><br>
 <label>password</label><input type="password" id="password" /><br><br>
 
+
 <br><br>
 
 
@@ -40,17 +41,54 @@
 <br>
 <br>
 
-<input type="submit" value="Accept incoming Call" onclick="answerIncomingCall();">
-<script>
-    window.setInterval(update(),1000);
-</script>
-<h1>Call Duration</h1>
+<input type="submit" value="Accept incoming Call" onclick="answerIncomingCall();"> <br><br><br><br>
+
+
+<h2> Call Recording </h2>
+
+<input type="submit" value="Start Recording" onclick="startRecording();">
+
+
+<input type="submit" value="Stop Recording" onclick="stopRecording();">
+
+<br>
+<br>
+
+
+<h2> Call Transfer </h2>
+
+
+<!--park: {reqid: 1, command: 'callpark'},-->
+<!--startRecord: {reqid: 2, command: 'startcallrecord'},-->
+<!--stopRecord: {reqid: 3, command: 'stopcallrecord'},-->
+<!--flip: {reqid: 3, command: 'callflip', target: ''},-->
+<!--monitor: {reqid: 4, command: 'monitor'},-->
+<!--barge: {reqid: 5, command: 'barge'},-->
+<!--whisper: {reqid: 6, command: 'whisper'},-->
+<!--takeover: {reqid: 7, command: 'takeover'}-->
+
+<input type="submit" value="Call Park" onclick="callpark();">
+
+
+
+<p> Filp Call to this number </p> :  <input type="text" id="Xnumber" /> <br><br>
+
+<input type="submit" value="Call Flip" onclick="callflip(Xnumber.value);">
+
+<input type="submit" value="Call Transfer" onclick="callTransfer(Xnumber.value);">
+
+
+<p> Send DTMF </p>  <input type="text" id="DTMF" /> <br><br>
+
+<input type="submit" value="Send DTMF " onclick="sendDTMF(DTMF.value);">
+
+<h2>Call Duration</h2>
 <pre id="duration" on></pre>
 
 
 <hr>
 
-<h1>Monitor</h1>
+<h2>Monitor</h2>
 <pre id="monitor"></pre>
 
 

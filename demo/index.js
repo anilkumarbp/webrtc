@@ -73,6 +73,32 @@ function forceDisconnectSip(){
 }
 
 
+function startRecording(){
+    line.record(true);
+}
+
+function stopRecording(){
+    if(line.isOnRecord()==true)
+        line.record(false);
+}
+
+
+function callpark(){
+        line.park();
+}
+
+function callflip(number){
+        line.flip(number)
+}
+
+function callTransfer(number){
+    line.transfer(number)
+}
+
+function sendDTMF(DTMF){
+    line.sendDTMF(DTMF)
+}
+
 function registerSIP(checkFlags, transport) {
     transport = transport || 'WSS';
     return platform
@@ -131,10 +157,10 @@ function registerSIP(checkFlags, transport) {
 
 
 
-
-function update() {
-    document.getElementById('duration').innerText = line.getCallDuration();//   line.getCallDuration();
-}
+//
+//function update() {
+//    document.getElementById('duration').innerText = line.getCallDuration();//   line.getCallDuration();
+//}
 
 
 

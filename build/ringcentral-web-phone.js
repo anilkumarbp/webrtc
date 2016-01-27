@@ -526,7 +526,7 @@ var PhoneLine = function(options) {
         },
         send: function(command, options) {
 
-            extend(command, options);
+            //extend(command, options);
 
             var cseq = null;
 
@@ -889,6 +889,8 @@ PhoneLine.prototype.record = function(val) {
             ? self.controlSender.messages.startRecord
             : self.controlSender.messages.stopRecord;
 
+        console.log('Record value'+val);
+
         if ((self.onRecord && !val) || (!self.onRecord && val)) {
             return this.controlSender.send(message)
                 .then(function(data) {
@@ -914,7 +916,6 @@ PhoneLine.prototype.flip = function(target) {
     }
 };
 
-//FIXME
 PhoneLine.prototype.park = function() {
     if (this.onCall) {
         return this.controlSender.send(this.controlSender.messages.park);
