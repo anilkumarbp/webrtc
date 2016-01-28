@@ -82,6 +82,9 @@ var defer = utils.defer;
 var extend = utils.extend;
 var uuid = utils.uuid;
 
+
+
+
 //Patching proto because of https://developers.google.com/web/updates/2015/07/mediastream-deprecations
 var mediaStreamManagerProto = Object.create(SIP.WebRTC.MediaStreamManager.prototype, {
     'release': {
@@ -103,57 +106,58 @@ var mediaStreamManagerProto = Object.create(SIP.WebRTC.MediaStreamManager.protot
     }
 });
 
+
 SIP.WebRTC.MediaStreamManager.prototype = mediaStreamManagerProto;
 
-//FIXME Unused
+//FIXME Unused - if needed could be replaced by sipJS function attachMediaStream(element, stream)
 //cross-browser mediaStream attaching
 //https://github.com/HenrikJoreteg/attachMediaStream
-function attachMediaStream(stream, el, options) {
-    var item;
-    var URL = window.URL;
-    var element = el;
-    var opts = {
-        autoplay: true,
-        mirror: false,
-        muted: false,
-        audio: false
-    };
-
-    if (options) {
-        for (item in options) {
-            opts[item] = options[item];
-        }
-    }
-
-    if (!element) {
-        element = document.createElement(opts.audio ? 'audio' : 'video');
-    } else if (element.tagName.toLowerCase() === 'audio') {
-        opts.audio = true;
-    }
-
-    if (opts.autoplay) element.autoplay = 'autoplay';
-    if (opts.muted) element.muted = true;
-    if (!opts.audio && opts.mirror) {
-        ['', 'moz', 'webkit', 'o', 'ms'].forEach(function(prefix) {
-            var styleName = prefix ? prefix + 'Transform' : 'transform';
-            element.style[styleName] = 'scaleX(-1)';
-        });
-    }
-
-    // this first one should work most everywhere now
-    // but we have a few fallbacks just in case.
-    if (URL && URL.createObjectURL) {
-        element.src = URL.createObjectURL(stream);
-    } else if (element.srcObject) {
-        element.srcObject = stream;
-    } else if (element.mozSrcObject) {
-        element.mozSrcObject = stream;
-    } else {
-        return false;
-    }
-
-    return element;
-}
+//function attachMediaStream(stream, el, options) {
+//    var item;
+//    var URL = window.URL;
+//    var element = el;
+//    var opts = {
+//        autoplay: true,
+//        mirror: false,
+//        muted: false,
+//        audio: false
+//    };
+//
+//    if (options) {
+//        for (item in options) {
+//            opts[item] = options[item];
+//        }
+//    }
+//
+//    if (!element) {
+//        element = document.createElement(opts.audio ? 'audio' : 'video');
+//    } else if (element.tagName.toLowerCase() === 'audio') {
+//        opts.audio = true;
+//    }
+//
+//    if (opts.autoplay) element.autoplay = 'autoplay';
+//    if (opts.muted) element.muted = true;
+//    if (!opts.audio && opts.mirror) {
+//        ['', 'moz', 'webkit', 'o', 'ms'].forEach(function(prefix) {
+//            var styleName = prefix ? prefix + 'Transform' : 'transform';
+//            element.style[styleName] = 'scaleX(-1)';
+//        });
+//    }
+//
+//    // this first one should work most everywhere now
+//    // but we have a few fallbacks just in case.
+//    if (URL && URL.createObjectURL) {
+//        element.src = URL.createObjectURL(stream);
+//    } else if (element.srcObject) {
+//        element.srcObject = stream;
+//    } else if (element.mozSrcObject) {
+//        element.mozSrcObject = stream;
+//    } else {
+//        return false;
+//    }
+//
+//    return element;
+//}
 
 var EVENT_NAMES = {
     'message': 'message',
@@ -219,6 +223,8 @@ var UserAgent = function(options) {
     this.RTCSessionDescription = undefined;
     checkConfig.apply(this);
 };
+
+//tested everything on UA.
 
 
 UserAgent.prototype.setSIPConfig = function(config) {
@@ -513,6 +519,10 @@ var PhoneLine = function(options) {
 
     this.responseTimeout = 10000;
 
+
+    //tested callparkm start/stop recording, callflip
+    //barge, whisper,takeover not implemented -- for barge dtmf code is *83
+    //dtmf for start-stop recording *9 doesnt work on softphone (desktop and mobile) and webrtc
     this.controlSender = {
         messages: {
             park: {reqid: 1, command: 'callpark'},
@@ -526,6 +536,7 @@ var PhoneLine = function(options) {
         },
         send: function(command, options) {
 
+            //commented to have a look at it and fix if needed
             //extend(command, options);
 
             var cseq = null;
@@ -587,6 +598,8 @@ var PhoneLine = function(options) {
         }
     };
 
+
+    //not used
     var __receiveRequest = this.session.receiveRequest;
     this.session.receiveRequest = function(request) {
         switch (request.method) {
@@ -626,6 +639,10 @@ var PhoneLine = function(options) {
         }
         return __receiveRequest.apply(self.session, arguments);
     };
+
+
+    //session emits connecting, progress, accepted rejected, bye, failed and terminated events for sip based commu...
+
 
     //Fired when ICE is starting to negotiate between the peers.
     this.session.on('connecting', function(e) {
@@ -881,7 +898,8 @@ PhoneLine.prototype.cancel = function() {
     return Promise.resolve(null);
 };
 
-
+//fix: pending promise status
+        //val = true or false
 PhoneLine.prototype.record = function(val) {
     var self = this;
     if (self.onCall) {
@@ -904,6 +922,7 @@ PhoneLine.prototype.record = function(val) {
     }
 };
 
+//
 PhoneLine.prototype.flip = function(target) {
     if (!target) return;
     if (this.onCall) {
@@ -915,6 +934,7 @@ PhoneLine.prototype.flip = function(target) {
         return Promise.reject(new Error('Not on call'));
     }
 };
+
 
 PhoneLine.prototype.park = function() {
     if (this.onCall) {
@@ -937,6 +957,7 @@ PhoneLine.prototype.sendDTMF = function(value, duration) {
     return Promise.resolve(null);
 };
 
+
 PhoneLine.prototype.sendInfoDTMF = function(value, duration) {
     duration = parseInt(duration) || 1000;
     var session = this.session;
@@ -945,6 +966,10 @@ PhoneLine.prototype.sendInfoDTMF = function(value, duration) {
     });
     return Promise.resolve(null);
 };
+
+
+//Transfer and BlindTransfer same?
+
 
 PhoneLine.prototype.blindTransfer = function(target, options) {
 
@@ -1032,6 +1057,8 @@ PhoneLine.prototype.transfer = function(target, options) {
     });
 };
 
+
+//works :  Usecase -- while the call is incoming -- forward the call to target number
 PhoneLine.prototype.forward = function(target, options) {
     var self = this, interval = null;
     return self.answer().then(function() {
@@ -1049,6 +1076,8 @@ PhoneLine.prototype.forward = function(target, options) {
         });
     });
 };
+
+
 
 PhoneLine.prototype.answer = function() {
     var self = this;
@@ -1163,6 +1192,7 @@ PhoneLine.prototype.sendRequest = function(method, body, options) {
     }, self.session.ua).send();
 };
 
+//replacable
 //Legacy hold uses direct in-dialog messages to trick SIP.js, try to avoid using this method if possible
 PhoneLine.prototype.__legacyHold = function(val) {
     var self = this;
@@ -1210,6 +1240,7 @@ PhoneLine.prototype.__legacyHold = function(val) {
     });
 };
 
+//_remove _ and make it hold()
 PhoneLine.prototype.__hold = function(val) {
     var self = this;
     return new Promise(function(resolve, reject){
@@ -1281,6 +1312,9 @@ PhoneLine.prototype.isClosed = function() {
 PhoneLine.prototype.hasEarlyMedia = function() {
     return this.__hasEarlyMedia;
 };
+//checked all of phoneLine functions
+
+
 
 
 //monkey patching emit for assuring that $apply is called

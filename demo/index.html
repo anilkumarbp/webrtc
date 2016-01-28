@@ -4,96 +4,118 @@
     <title>WebPhone</title>
 </head>
 <body>
+<br><br>
+
+<div class="form-horizontal" >
+
+
+
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">apikey</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="apikey"  >
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">apisecret</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="apisecret">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">fromnumber</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="fromnumber" >
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">extension</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="extension" >
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">password</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="password" >
+        </div>
+    </div>
+
+
+
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Register Sip Configurations" onclick="register(apikey.value,apisecret.value,fromnumber.value,password.value);">
+            <input type="submit" value="UnRegister Sip Configurations" onclick="unregisterSip();">
+            <input type="submit" value="ForceDisconnect Sip Connection" onclick="forceDisconnectSip();">
+
+            <br><br>
+            <label class="control-lable">Call To</label>
+            <div class="form-group">
+
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="tonumber">
+                </div>
+            </div>
+
+
+            <input type="submit" value="Call" onclick="startCall(tonumber.value,fromnumber.value);">
+            <input type="submit" value="Disconnect Call" onclick="disconnect();">
+            <input type="submit" value="Hold" onclick="hold();">
+            <input type="submit" value="Unhold" onclick="unhold();">
+            <input type="submit" value="Mute" onclick="mute();">
+            <input type="submit" value="UnMute" onclick="unmute();">
+            <input type="submit" value="Accept incoming Call" onclick="answerIncomingCall();">
+            <input type="submit" value="Start Recording" onclick="startRecording();">
+            <input type="submit" value="Stop Recording" onclick="stopRecording();">
+
+
+            <br><br>
+            <label class="control-lable">FlipCall To</label>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Xnumber">
+                </div>
+            </div>
+
+            <input type="submit" value="Call Flip" onclick="callflip(Xnumber.value);">
+            <input type="submit" value="Call Park" onclick="callpark();">
+            <input type="submit" value="Call Transfer" onclick="callTransfer(Xnumber.value);">
+
+            <br><br>
+            <label class="control-lable">Send DTMF </label>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="DTMF">
+                </div>
+            </div>
+            <input type="submit" value="Send DTMF " onclick="sendDTMF(DTMF.value);">
+
+            <br><br>
+            <label class="control-lable">Forward Call to </label>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="forwardNumber">
+                </div>
+            </div>
+
+            <input type="submit" value="Forward the Call" onclick="forward(forwardNumber.value);">
+        </div>
+
+</div>
+
+
+
 
 <br><br>
 
-<label>apikey</label><input type="text" id="apikey" /><br><br>
-<label>apisecret</label><input type="text" id="apisecret" /><br><br>
-<label>username</label><input type="text" id="fromnumber" /><br><br>
-<label>extension</label><input type="text" id="extension" /><br><br>
-<label>password</label><input type="password" id="password" /><br><br>
 
-
-<br><br>
-
-
-<input type="submit" value="Register Sip Configurations" onclick="register(apikey.value,apisecret.value,fromnumber.value,password.value);"><br><br>
-<input type="submit" value="UnRegister Sip Configurations" onclick="unregisterSip();"><br><br>
-<input type="submit" value="ForceDisconnect Sip Connection" onclick="forceDisconnectSip();">
-
-<br>
-<br>
-
-<input type="text" id="tonumber" /> <br><br>
-
-<input type="submit" value="Call" onclick="startCall(tonumber.value,fromnumber.value);">
-
-<input type="submit" value="Disconnect Call" onclick="disconnect();">
-
-<input type="submit" value="Hold" onclick="hold();">
-
-<input type="submit" value="Unhold" onclick="unhold();">
-
-<input type="submit" value="Mute" onclick="mute();">
-
-<input type="submit" value="UnMute" onclick="unmute();">
-
-<br>
-<br>
-
-<input type="submit" value="Accept incoming Call" onclick="answerIncomingCall();"> <br><br><br><br>
-
-
-<h2> Call Recording </h2>
-
-<input type="submit" value="Start Recording" onclick="startRecording();">
-
-
-<input type="submit" value="Stop Recording" onclick="stopRecording();">
-
-<br>
-<br>
-
-
-<h2> Call Transfer </h2>
-
-
-<!--park: {reqid: 1, command: 'callpark'},-->
-<!--startRecord: {reqid: 2, command: 'startcallrecord'},-->
-<!--stopRecord: {reqid: 3, command: 'stopcallrecord'},-->
-<!--flip: {reqid: 3, command: 'callflip', target: ''},-->
-<!--monitor: {reqid: 4, command: 'monitor'},-->
-<!--barge: {reqid: 5, command: 'barge'},-->
-<!--whisper: {reqid: 6, command: 'whisper'},-->
-<!--takeover: {reqid: 7, command: 'takeover'}-->
-
-<input type="submit" value="Call Park" onclick="callpark();">
-
-
-
-<p> Filp Call to this number </p> :  <input type="text" id="Xnumber" /> <br><br>
-
-<input type="submit" value="Call Flip" onclick="callflip(Xnumber.value);">
-
-<input type="submit" value="Call Transfer" onclick="callTransfer(Xnumber.value);">
-
-
-<p> Send DTMF </p>  <input type="text" id="DTMF" /> <br><br>
-
-<input type="submit" value="Send DTMF " onclick="sendDTMF(DTMF.value);">
-
-<h2>Call Duration</h2>
-<pre id="duration" on></pre>
-
-
-<hr>
 
 <h2>Monitor</h2>
 <pre id="monitor"></pre>
 
 
 
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <script src="../bower_components/pubnub/web/pubnub.js" type="text/javascript"></script>
 <!--<script src="../bower_components/es6-promise/promise.js" type="text/javascript"></script>-->
 <!--<script src="../bower_components/fetch/fetch.js" type="text/javascript"></script>-->

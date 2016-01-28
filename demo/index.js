@@ -8,22 +8,30 @@ localStorage.webPhoneUUID = localStorage.webPhoneUUID || webPhone.utils.uuid();
 var platform ;
 
 function startCall(toNumber, fromNumber) {
-    fromNumber = fromNumber || localStorage.webPhoneLogin;
+    if (fromNumber == "")
+        alert('Fill in the number');
+    else {
 
-    console.log('SIP call to', toNumber, 'from', fromNumber);
-    var countryId = null;
-    platform
-        .get('/restapi/v1.0/account/~/extension/~')
-        .then(function(res) {
-            var info = res.json();
-            if (info && info.regionalSettings && info.regionalSettings.homeCountry) {
-                countryId = info.regionalSettings.homeCountry.id;
-            }
-        })
-        .then(function() {
-            webPhone.sipUA.call(toNumber, fromNumber, countryId);
-        });
+
+        fromNumber = fromNumber || localStorage.webPhoneLogin;
+
+        console.log('SIP call to', toNumber, 'from', fromNumber);
+        var countryId = null;
+        platform
+            .get('/restapi/v1.0/account/~/extension/~')
+            .then(function (res) {
+                var info = res.json();
+                if (info && info.regionalSettings && info.regionalSettings.homeCountry) {
+                    countryId = info.regionalSettings.homeCountry.id;
+                }
+            })
+            .then(function () {
+                webPhone.sipUA.call(toNumber, fromNumber, countryId);
+            });
+    }
 }
+
+
 
 function mute(){
     webPhone.sipUA.mute(line);
@@ -41,16 +49,13 @@ function unhold(){
     webPhone.sipUA.unhold(line);
 }
 
-//function transfer(){
-//    webPhone.sipUA.transfer();
-//}
-
 function answerIncomingCall(){
     webPhone.sipUA.answer(line);
 }
 
 function disconnect(){
-    webPhone.sipUA.hangup();
+
+    line.hangup();
 }
 
 function isOnCall(){
@@ -78,7 +83,6 @@ function startRecording(){
 }
 
 function stopRecording(){
-    if(line.isOnRecord()==true)
         line.record(false);
 }
 
@@ -88,15 +92,31 @@ function callpark(){
 }
 
 function callflip(number){
+    if(number=="")
+        alert('Fill in the number');
+    else
         line.flip(number)
 }
 
 function callTransfer(number){
+    if(number=="")
+        alert('Fill in the number');
+    else
     line.transfer(number)
 }
 
 function sendDTMF(DTMF){
+    if(DTMF=="")
+        alert('Fill in the DTMF');
+    else
     line.sendDTMF(DTMF)
+}
+
+function forward(number){
+    if(number=="")
+        alert('Fill in the number');
+    else
+    line.forward(number)
 }
 
 function registerSIP(checkFlags, transport) {
@@ -151,19 +171,6 @@ function registerSIP(checkFlags, transport) {
 
 
 
-//function updateTime(){
-//    return line.getCallDuration();
-//}
-
-
-
-//
-//function update() {
-//    document.getElementById('duration').innerText = line.getCallDuration();//   line.getCallDuration();
-//}
-
-
-
 function app() {
     console.log('Sip Registered');
     webPhone.monitor.onUpdate(function() {
@@ -172,9 +179,6 @@ function app() {
 
     });
 }
-
-
-
 
 
 
