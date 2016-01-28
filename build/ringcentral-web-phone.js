@@ -537,6 +537,7 @@ var PhoneLine = function(options) {
         send: function(command, options) {
 
             //commented to have a look at it and fix if needed
+
             //extend(command, options);
 
             var cseq = null;

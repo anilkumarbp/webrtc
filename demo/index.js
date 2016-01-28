@@ -171,6 +171,8 @@ function registerSIP(checkFlags, transport) {
 
 
 
+
+
 function app() {
     console.log('Sip Registered');
     webPhone.monitor.onUpdate(function() {
@@ -179,6 +181,9 @@ function app() {
 
     });
 }
+
+
+
 
 
 
