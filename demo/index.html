@@ -7,57 +7,18 @@
 <br><br>
 
 <div class="form-horizontal" >
-
-
-
-    <div class="form-group">
-        <label  class="col-sm-2 control-label">apikey</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" id="apikey"  >
-        </div>
-    </div>
-    <div class="form-group">
-        <label  class="col-sm-2 control-label">apisecret</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" id="apisecret">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">fromnumber</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" id="fromnumber" >
-        </div>
-    </div>
-    <div class="form-group">
-        <label  class="col-sm-2 control-label">extension</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" id="extension" >
-        </div>
-    </div>
-    <div class="form-group">
-        <label  class="col-sm-2 control-label">password</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" id="password" >
-        </div>
-    </div>
-
-
-
+  
         <div class="col-sm-offset-2 col-sm-10">
             <input type="submit" value="Register Sip Configurations" onclick="register(apikey.value,apisecret.value,fromnumber.value,password.value);">
             <input type="submit" value="UnRegister Sip Configurations" onclick="unregisterSip();">
-            <input type="submit" value="ForceDisconnect Sip Connection" onclick="forceDisconnectSip();">
-
+            <input type="submit" value="Force Disconnect Sip Connection" onclick="forceDisconnectSip();">
             <br><br>
             <label class="control-lable">Call To</label>
             <div class="form-group">
-
                 <div class="col-sm-2">
                     <input type="text" class="form-control" id="tonumber">
                 </div>
             </div>
-
-
             <input type="submit" value="Call" onclick="startCall(tonumber.value,fromnumber.value);">
             <input type="submit" value="Disconnect Call" onclick="disconnect();">
             <input type="submit" value="Hold" onclick="hold();">
@@ -67,8 +28,6 @@
             <input type="submit" value="Accept incoming Call" onclick="answerIncomingCall();">
             <input type="submit" value="Start Recording" onclick="startRecording();">
             <input type="submit" value="Stop Recording" onclick="stopRecording();">
-
-
             <br><br>
             <label class="control-lable">FlipCall To</label>
             <div class="form-group">
@@ -76,20 +35,17 @@
                     <input type="text" class="form-control" id="Xnumber">
                 </div>
             </div>
-
             <input type="submit" value="Call Flip" onclick="callflip(Xnumber.value);">
             <input type="submit" value="Call Park" onclick="callpark();">
             <input type="submit" value="Call Transfer" onclick="callTransfer(Xnumber.value);">
-
             <br><br>
-            <label class="control-lable">Send DTMF </label>
+            <label class="control-lable">Send DTMF</label>
             <div class="form-group">
                 <div class="col-sm-2">
                     <input type="text" class="form-control" id="DTMF">
                 </div>
             </div>
             <input type="submit" value="Send DTMF " onclick="sendDTMF(DTMF.value);">
-
             <br><br>
             <label class="control-lable">Forward Call to </label>
             <div class="form-group">
@@ -97,23 +53,13 @@
                     <input type="text" class="form-control" id="forwardNumber">
                 </div>
             </div>
-
             <input type="submit" value="Forward the Call" onclick="forward(forwardNumber.value);">
         </div>
-
 </div>
-
-
-
-
 <br><br>
-
-
 
 <h2>Monitor</h2>
 <pre id="monitor"></pre>
-
-
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <script src="../bower_components/pubnub/web/pubnub.js" type="text/javascript"></script>
